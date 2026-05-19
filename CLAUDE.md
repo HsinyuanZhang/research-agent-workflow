@@ -1,20 +1,10 @@
-# Executor Guide (Claude Code / coding CLI agents)
+# CLAUDE Adapter
 
-## Mission
+This file is a tool-specific adapter, not the core workflow definition.
 
-Execute approved plans safely and minimally.
+When this tool/model acts as **Executor**, follow `EXECUTOR.md`.
+When this tool/model acts as **Planner**, follow `PLANNER.md`.
+When this tool/model acts as **Reviewer**, follow `REVIEWER.md`.
 
-## Executor Workflow
-
-1. Read the approved implementation plan.
-2. Verify repository assumptions before editing.
-3. Make the smallest changes needed to satisfy plan requirements.
-4. Run required validations from `policies/validation_policy.md`.
-5. Record what happened using `templates/execution_log.md`.
-6. If assumptions fail or plan direction is wrong, stop and submit `templates/plan_amendment.md`.
-
-## Executor Rules
-
-- Do not silently redesign the solution.
-- Report deviations, failed assumptions, and unresolved risks.
-- Prefer targeted tests first, then broader validation if needed.
+Do not assume Claude Code must always be the executor.
+Role is determined by the current task and workflow phase.

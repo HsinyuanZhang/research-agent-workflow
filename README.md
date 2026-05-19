@@ -2,26 +2,33 @@
 
 Personal workflow rules, templates, and skills for multi-agent research coding.
 
-This repository defines how to coordinate different AI CLI tools across multiple machines and projects.
+This repository defines how to coordinate AI agent roles across multiple machines and projects.
 
 ## Purpose
 
 This repo is the shared control layer for an AI-assisted research workflow.
 
-The intended workflow is:
+The intended workflow is role-first:
 
 ```text
-Codex / OpenAI model
+Planner role
   -> analyze project
-  -> discuss design with me
-  -> generate implementation plan
+  -> discuss architecture/design
+  -> generate or revise implementation plan
 
-Claude Code / DeepSeek / OSS coding model
-  -> read the plan
+Executor role
+  -> read approved plan
   -> verify repository assumptions
   -> execute code changes
   -> report deviations and validation results
+
+Reviewer role
+  -> inspect diff, logs, and validation results
+  -> judge whether implementation follows the plan
 ```
+
+Codex, Claude Code, DeepSeek, OSS models, or future tools are possible implementations of these roles.
+Role selection depends on task phase and capability, not tool name.
 
 The goal is not to make every agent autonomous.
 The goal is to make each agent operate within a clear role boundary.
@@ -37,8 +44,6 @@ No agent silently changes role.
 
 ### Planner
 
-Usually Codex or another strong reasoning model.
-
 Responsibilities:
 - understand the project
 - discuss architecture and tradeoffs
@@ -46,9 +51,9 @@ Responsibilities:
 - revise plans when execution reveals problems
 - review final diffs and logs
 
-### Executor
+Typical implementation: a strong reasoning model.
 
-Usually Claude Code, DeepSeek, or another coding CLI agent.
+### Executor
 
 Responsibilities:
 - read the approved plan
@@ -58,9 +63,9 @@ Responsibilities:
 - write execution logs
 - stop and report when the plan is wrong
 
-### Reviewer
+Typical implementation: a coding CLI model.
 
-Usually Codex or another stronger model.
+### Reviewer
 
 Responsibilities:
 - compare implementation against the plan
@@ -68,12 +73,17 @@ Responsibilities:
 - inspect test results
 - identify remaining risks
 
+Typical implementation: a strong evaluator model.
+
 ## Repository Layout
 
 ```text
 research-agent-workflow/
   README.md
   AGENTS.md
+  PLANNER.md
+  EXECUTOR.md
+  REVIEWER.md
   CODEX.md
   CLAUDE.md
 
@@ -112,12 +122,21 @@ Before planning or executing tasks, read:
 
 `~/research-agent-workflow/AGENTS.md`
 
-For Codex planning, read:
+For planning tasks, read:
 
-`~/research-agent-workflow/CODEX.md`
+`~/research-agent-workflow/PLANNER.md`
 
-For Claude Code execution, read:
+For execution tasks, read:
 
+`~/research-agent-workflow/EXECUTOR.md`
+
+For review tasks, read:
+
+`~/research-agent-workflow/REVIEWER.md`
+
+Then read any tool-specific adapter if relevant:
+
+`~/research-agent-workflow/CODEX.md`  
 `~/research-agent-workflow/CLAUDE.md`
 
 Use templates from:
@@ -154,4 +173,4 @@ Primary use cases:
 - research code
 - hardware/software co-design projects
 - multi-machine development
-- Codex-to-Claude-Code handoff
+- role-based planner/executor/reviewer handoff
